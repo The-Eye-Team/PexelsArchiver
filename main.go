@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/gocolly/colly"
@@ -40,7 +41,9 @@ func init() {
 
 func downloadPicture(link, uploaderName, index string) (err error) {
 	// Replace slash
-	// uploaderName = strings.Replace(name, "/", "_", -1)
+	uploaderName = strings.Replace(uploaderName, " ", "_", -1)
+	uploaderName = strings.Replace(uploaderName, "/", "_", -1)
+	uploaderName = strings.Replace(uploaderName, ".", "", -1)
 
 	// Check if file exist
 	if _, err := os.Stat(arguments.Output + "/" + uploaderName + "/" + index + ".jpg"); !os.IsNotExist(err) {
